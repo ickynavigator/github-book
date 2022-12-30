@@ -26,7 +26,7 @@ const Home: NextPage = () => {
   const form = useForm<RouterInputs['github']['fetchContents']>({
     initialValues: {
       owner: 'ickynavigator',
-      repo: 'wordle-api',
+      repo: 'github-book',
       path: '',
       hideDirs: true,
       fileTypes: '',
@@ -56,6 +56,7 @@ const Home: NextPage = () => {
     console.log(res, err);
 
     if (err) {
+      // TODO: Show error
       console.error(err);
     }
 
