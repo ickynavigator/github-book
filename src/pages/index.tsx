@@ -17,13 +17,18 @@ import { useState } from 'react';
 import type { RouterInputs, RouterOutputs } from '../utils/trpc';
 import { trpc } from '../utils/trpc';
 
+type FetchContentsType = {
+  out: RouterOutputs['github']['fetchContents'];
+  in: RouterInputs['github']['fetchContents'];
+};
+
 const Home: NextPage = () => {
-  const [dirs, setDirs] = useState<RouterOutputs['github']['fetchContents']>();
+  const [dirs, setDirs] = useState<FetchContentsType['out']>();
 
   const { fetchContents } = trpc.github;
   const fetchContentsMutate = fetchContents.useMutation();
 
-  const form = useForm<RouterInputs['github']['fetchContents']>({
+  const form = useForm<FetchContentsType['in']>({
     initialValues: {
       owner: 'ickynavigator',
       repo: 'github-book',
@@ -49,7 +54,7 @@ const Home: NextPage = () => {
     },
   });
 
-  const onSubmit = async (values: RouterInputs['github']['fetchContents']) => {
+  const onSubmit = async (values: FetchContentsType['in']) => {
     const res = await fetchContentsMutate.mutateAsync(values);
     const err = fetchContentsMutate.error;
 
