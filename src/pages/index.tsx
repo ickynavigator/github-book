@@ -1,11 +1,14 @@
 import {
+  Alert,
   Button,
   Checkbox,
   Container,
   Group,
   Loader,
   Paper,
+  ScrollArea,
   SimpleGrid,
+  Text,
   TextInput,
   Title,
 } from '@mantine/core';
@@ -56,16 +59,10 @@ const Home: NextPage = () => {
 
   const onSubmit = async (values: FetchContentsType['in']) => {
     const res = await fetchContentsMutate.mutateAsync(values);
-    const err = fetchContentsMutate.error;
 
-    console.log(res, err);
-
-    if (err) {
-      // TODO: Show error
-      console.error(err);
+    if (!fetchContentsMutate.isError) {
+      setDirs(res);
     }
-
-    setDirs(res);
   };
 
   return (
@@ -132,11 +129,21 @@ const Home: NextPage = () => {
         {fetchContentsMutate.isLoading ? (
           <Loader />
         ) : (
-          dirs && (
-            <Paper shadow="xl" radius="md" p="xl" my="lg" withBorder>
-              <pre>{JSON.stringify(dirs, null, 4)}</pre>
-            </Paper>
-          )
+          <Paper shadow="xl" radius="md" p="xl" my="lg" withBorder>
+            <ScrollArea scrollHideDelay={500}>
+              {dirs && <pre>{JSON.stringify(dirs, null, 4)}</pre>}
+
+              {!dirs && !fetchContentsMutate.isError && (
+                <Text align="center">NO DATA FOUND YET</Text>
+              )}
+
+              {fetchContentsMutate.isError && (
+                <Alert title="Bummer" color="red">
+                  An Error occured while fetching data. Please try again later.
+                </Alert>
+              )}
+            </ScrollArea>
+          </Paper>
         )}
       </Container>
     </>
