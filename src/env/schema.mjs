@@ -7,7 +7,7 @@ import { z } from 'zod';
  */
 export const serverSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  GITHUB_TOKEN: z.string(),
+  GITHUB_TOKEN: z.string().optional(),
 });
 
 /**
