@@ -126,10 +126,10 @@ const Home: NextPage = () => {
           </Group>
         </form>
 
-        {fetchContentsMutate.isLoading ? (
-          <Loader />
-        ) : (
-          <Paper shadow="xl" radius="md" p="xl" my="lg" withBorder>
+        <Paper shadow="xl" radius="md" p="xl" my="lg" withBorder>
+          {fetchContentsMutate.isLoading ? (
+            <Loader />
+          ) : (
             <ScrollArea scrollHideDelay={500}>
               {dirs && <pre>{JSON.stringify(dirs, null, 4)}</pre>}
 
@@ -143,8 +143,8 @@ const Home: NextPage = () => {
                 </Alert>
               )}
             </ScrollArea>
-          </Paper>
-        )}
+          )}
+        </Paper>
       </Container>
     </>
   );
